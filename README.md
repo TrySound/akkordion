@@ -4,7 +4,7 @@ VanillaJS Accordion Library
 ##Install
 
 ```
-boewr i akkordion
+bower i akkordion
 ```
 
 ##Usage
