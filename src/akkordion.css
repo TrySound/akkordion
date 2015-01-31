@@ -1,0 +1,19 @@
+.akkordion-title {
+	cursor: pointer;
+}
+
+.akkordion-outer {
+	overflow: hidden;
+	transition-property: height;
+	will-change: height;
+}
+
+.akkordion-content {
+	box-sizing: border-box;
+	overflow: hidden;
+	height: 0;
+}
+
+.akkordion-active {
+	height: auto;
+}

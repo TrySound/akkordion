@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<title>Akkordion by TrySound</title>
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" href="src/akkordion.css">
+	<!-- <link rel="shortcut icon" type="image/ico" href="img/favicon.ico"> -->
+	<style>
+
+.wrapper {
+	position: relative;
+	overflow: hidden;
+	padding-bottom: 20px;
+}
+
+.panel-heading.panel-heading {
+	border: 1px solid #fff;
+}
+
+.ribbon {
+	background-color: #bce8f1;
+	overflow: hidden;
+	white-space: nowrap;
+	position: absolute;
+	right: -50px;
+	top: 40px;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+	box-shadow: 0 0 8px rgba(0, 0, 0, .5);
+}
+
+@-webkit-keyframes pulse {
+	50% {box-shadow: 0 0 10px rgba(0, 0, 0, .2);}
+}
+
+@keyframes pulse {
+	50% {box-shadow: 0 0 10px rgba(0, 0, 0, .2);}
+}
+
+.ribbon:hover {
+	-webkit-animation: pulse .5s infinite;
+	animation: pulse .5s infinite;
+}
+
+.ribbon a {
+	border: 1px solid #31708f;
+	color: #31708f;
+	display: block;
+	font: bold .875em 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	margin: 1px 0;
+	padding: 10px 50px;
+	text-align: center;
+	text-decoration: none;
+}
+
+	</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+	<div class="ribbon">
+		<a href="https://github.com/TrySound/akkordion" target="_blank">Fork me on GitHub</a>
+	</div>
+
+	<main class="container">
+		<header class="page-header">
+			<h1>Akkordion</h1>
+			<p class="lead"><small>VanillaJS Accordion Library</small></p>
+		</header>
+
+		<section class="akkordion panel panel-info" data-akkordion-single="true">
+			<div class="akkordion-title panel-heading">Title 1</div>
+			<article class="akkordion-content akkordion-active">
+				<div class="panel-body">
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus facere, perspiciatis! Expedita?</p>
+					<p>Totam, facere, deleniti. Totam aliquid autem recusandae, error in tenetur ut rem.</p>
+					<section class="akkordion panel panel-info" data-akkordion-single="false">
+						<div class="akkordion-title panel-heading">Title 1</div>
+						<article class="akkordion-content">
+							<div class="panel-body">
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia fugit officiis, suscipit perspiciatis, totam incidunt eos quaerat ad maxime quia numquam blanditiis quisquam aperiam officia minima consequatur, distinctio praesentium dolor, aspernatur sapiente possimus cupiditate. Recusandae earum error optio quidem possimus nisi sint sed, nulla, nostrum voluptas voluptatibus, esse, modi magni alias asperiores reiciendis! Cum, ab perferendis quis, ipsa pariatur repudiandae quas odio, autem error repellat doloremque beatae sapiente optio earum dolore nisi sed vero! Corporis, dicta quasi sed adipisci hic architecto mollitia magnam molestias itaque deserunt asperiores obcaecati? Facere nostrum dignissimos numquam possimus, illo beatae enim nam cumque consectetur. Harum.</p>
+							</div>
+						</article>
+						
+						<div class="akkordion-title panel-heading">Title 2</div>
+						<article class="akkordion-content">
+							<div class="panel-body">
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere totam saepe voluptates nobis, maiores quia fugit reiciendis in exercitationem, enim pariatur fuga nisi accusantium! Non suscipit quaerat at iste earum libero odit, ex eos quisquam laudantium provident enim modi ad repellendus corrupti ullam tempore fugit vitae tempora sapiente natus dicta!</p>
+							</div>
+						</article>
+					</section>
+				</div>
+			</article>
+
+			<div class="akkordion-title panel-heading">Disabled item without body</div>
+			<div class="akkordion-title panel-heading">Title 3</div>
+			<article class="akkordion-content">
+				<div class="panel-body">
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum maiores sequi voluptate.</p>
+					<p>Nisi aperiam omnis, officia tenetur officiis repellat id, deleniti expedita explicabo cumque.</p>
+				</div>
+			</article>
+
+			<div class="akkordion-title panel-heading">Title 4</div>
+			<article class="akkordion-content">
+				<div class="panel-body">
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo sint earum repellat!</p>
+					<p>Dolorem sint ad aliquam enim exercitationem! Quibusdam veniam at consectetur distinctio ex.</p>
+				</div>
+			</article>
+
+			<div class="akkordion-title panel-heading">Title 5</div>
+			<article class="akkordion-content">
+				<div class="panel-body">
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt quae perferendis, amet.</p>
+					<p>Fuga consequatur esse dolores ea quam nulla soluta velit, quisquam, consequuntur labore?</p>
+				</div>
+			</article>
+		</section>
+
+		<hr>
+
+		<footer class="text-center">
+			<small>&copy; 2015 by <a href="https://github.com/trysound">TrySound</a></small>
+		</footer>
+	</main>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="dist/akkordion.js"></script>
+
+</body>
+</html>

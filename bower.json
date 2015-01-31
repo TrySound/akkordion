@@ -1,0 +1,28 @@
+{
+  "name": "akkordion",
+  "homepage": "https://github.com/TrySound/akkordion",
+  "authors": [
+    "Bogdan Chadkin <trysound@yandex.ru>"
+  ],
+  "description": "Accordion UI Element",
+  "main": [
+    "dist/akkordion.js",
+    "dist/akkordion.css"
+  ],
+  "keywords": [
+    "accordion",
+    "vanillajs",
+    "ui"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "bootstrap": "~3.3.2"
+  }
+}

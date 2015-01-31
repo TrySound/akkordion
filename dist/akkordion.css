@@ -1,0 +1,28 @@
+/*!
+ * akkordion 0.0.1
+ * Accordion UI Element
+ * https://github.com/TrySound/akkordion
+ * 
+ * Released under the MIT license
+ * Copyright (c) 2015, Bogdan Chadkin <trysound@yandex.ru>
+ */
+
+.akkordion-title {
+	cursor: pointer;
+}
+
+.akkordion-outer {
+	overflow: hidden;
+	transition-property: height;
+	will-change: height;
+}
+
+.akkordion-content {
+	box-sizing: border-box;
+	overflow: hidden;
+	height: 0;
+}
+
+.akkordion-active {
+	height: auto;
+}
