@@ -1,6 +1,14 @@
 # akkordion
 VanillaJS Accordion Library
 
+##Why?
+
+- No flash on page load
+- Initialize by class name and data-* attributes
+- Graceful Degradation for non-transition browsers
+- Could be nested
+- No need jQuery or other dependencies
+
 ##Install
 
 ```
