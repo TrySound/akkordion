@@ -1,6 +1,6 @@
 {
   "name": "akkordion",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Accordion UI Element",
   "readme": "README.md",
   "main": "gulpfile.js",
