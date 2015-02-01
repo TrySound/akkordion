@@ -12,11 +12,7 @@ VanillaJS Accordion Library
 ##Install
 
 ```
-<<<<<<< HEAD
-boewr i akkordion
-=======
 bower i akkordion
->>>>>>> master
 ```
 
 ##Usage
