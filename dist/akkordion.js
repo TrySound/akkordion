@@ -1,5 +1,5 @@
 /*!
- * akkordion 0.1.0
+ * akkordion 0.1.1
  * Accordion UI Element
  * https://github.com/TrySound/akkordion
  * 
