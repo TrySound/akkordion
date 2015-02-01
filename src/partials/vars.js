@@ -35,4 +35,16 @@
 		single: true,
 		speed: 300,
 		opacity: false
+<<<<<<< HEAD
+=======
+	}, callbacks = {
+		'init': [],
+		'abort': [],
+		'beforeopen': [],
+		'open': [],
+		'afteropen': [],
+		'beforeclose': [],
+		'close': [],
+		'afterclose': []
+>>>>>>> master
 	};

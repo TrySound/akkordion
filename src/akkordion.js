@@ -25,7 +25,19 @@
 				new bind(el, options);
 			}
 		}
+	}
+
+
+	akkordion.on = function (event, cb) {
+		var collection = callbacks[(event = event.toLowerCase())];
+
+		if(collection && typeof collection.length === 'number' && typeof cb === 'function') {
+			collection.push(cb);
+		}
+
+		return akkordion;
 	};
+
 
 	on(document, 'DOMContentLoaded', function () {
 		akkordion('.akkordion');

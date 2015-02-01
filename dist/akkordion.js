@@ -1,5 +1,5 @@
 /*!
- * akkordion 0.0.2
+ * akkordion 0.1.0
  * Accordion UI Element
  * https://github.com/TrySound/akkordion
  * 
@@ -50,6 +50,18 @@
 		single: true,
 		speed: 300,
 		opacity: false
+<<<<<<< HEAD
+=======
+	}, callbacks = {
+		'init': [],
+		'abort': [],
+		'beforeopen': [],
+		'open': [],
+		'afteropen': [],
+		'beforeclose': [],
+		'close': [],
+		'afterclose': []
+>>>>>>> master
 	};
 
 
@@ -60,6 +72,7 @@
 		this.cache();
 		this.setDefaultState();
 		this.bindEvents();
+		trigger('init', el);
 	};
 
 	bind.prototype.cache = function () {
@@ -159,15 +172,23 @@
 		on(this.root, transitionEnd, function (e) {
 			var el = e.target,
 				prop = e.propertyName,
-				index;
+				index, title, content;
 
 			if(prop === 'height' && (index = self.outerSet.indexOf(el)) > -1) {
+				title = self.titleSet[index];
+				content = self.contentSet[index];
+
 				attr(el, dataAnimating, null);
 				if(attr(el, dataActive)) {
 					el.style.cssText = 'height:auto;';
+					trigger('open', this, title, content);
+					trigger('afteropen', this, title, content);
 				} else {
 					el.style.cssText = 'height:0;';
+					trigger('close', this, title, content);
+					trigger('afterclose', this, title, content);
 				}
+
 			}
 		});
 	};
@@ -185,7 +206,8 @@
 	}
 
 	bind.prototype.open = function (index, noAnim) {
-		var title = this.titleSet[index],
+		var root = this.root,
+			title = this.titleSet[index],
 			outer = this.outerSet[index],
 			content = this.contentSet[index],
 			transitionDuration = transition + '-duration:' + this.options.speed + 'ms;',
@@ -194,9 +216,23 @@
 			hasOpacity = this.options.opacity;
 
 		if( ! transition || noAnim) {
+			if( ! trigger('beforeopen', root, title, content)) {
+				trigger('abort', root, title, content);
+				return;
+			}
+
 			this.setActive(index, true);
 			outer.style.cssText = 'height:auto;';
+
+			trigger('open', root, title, content);
+			trigger('afteropen', root, title, content);
+
 		} else if( ! attr(outer, dataAnimating) && ! attr(outer, dataActive)) {
+			if( ! trigger('beforeopen', root, title, content)) {
+				trigger('abort', root, title, content);
+				return;
+			}
+
 			this.setActive(index, true);
 			attr(outer, dataAnimating, true);
 
@@ -215,16 +251,37 @@
 	}
 
 	bind.prototype.close = function (index, noAnim) {
-		var outer = this.outerSet[index];
+		var root = this.root,
+			title = this.titleSet[index],
+			outer = this.outerSet[index],
 			content = this.contentSet[index],
 			transitionDuration = transition + '-duration:' + this.options.speed + 'ms;',
 			transitionDelay = transition + '-delay:' + this.options.speed / 3 + 'ms;',
+<<<<<<< HEAD
 			hasOpacity = this.options.opacity;
+=======
+			hasOpacity = this.options.opacity,
+			result;
+>>>>>>> master
 
 		if( ! transition || noAnim) {
+			if( ! trigger('beforeclose', root, title, content)) {
+				trigger('abort', root, title, content);
+				return;
+			}
+
 			this.setActive(index, false);
 			outer.style.cssText = 'height:0;';
+
+			trigger('close', root, title, content);
+			trigger('afterclose', root, title, content);
+
 		} else if( ! attr(outer, dataAnimating) && attr(outer, dataActive)) {
+			if( ! trigger('beforeclose', root, title, content)) {
+				trigger('abort', root, title, content);
+				return;
+			}
+
 			this.setActive(index, false);
 			attr(outer, dataAnimating, true);
 
@@ -258,7 +315,19 @@
 				new bind(el, options);
 			}
 		}
+	}
+
+
+	akkordion.on = function (event, cb) {
+		var collection = callbacks[(event = event.toLowerCase())];
+
+		if(collection && typeof collection.length === 'number' && typeof cb === 'function') {
+			collection.push(cb);
+		}
+
+		return akkordion;
 	};
+
 
 	on(document, 'DOMContentLoaded', function () {
 		akkordion('.akkordion');
@@ -267,6 +336,17 @@
 
 
 	return akkordion;
+
+	function trigger(event, root, title, content) {
+		var collection = callbacks[event],
+			result = true;
+
+		for(i = 0, max = collection.length; i < max; i++) {
+			result = collection[i].call(root, title, content) === false ? false : result;
+		}
+
+		return result;
+	}
 
 
 	function attr(el, name, val) {

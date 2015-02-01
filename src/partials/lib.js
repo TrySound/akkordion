@@ -1,3 +1,14 @@
+	function trigger(event, root, title, content) {
+		var collection = callbacks[event],
+			result = true;
+
+		for(i = 0, max = collection.length; i < max; i++) {
+			result = collection[i].call(root, title, content) === false ? false : result;
+		}
+
+		return result;
+	}
+
 
 	function attr(el, name, val) {
 		return val === undefined ? el.hasAttribute(name) :
