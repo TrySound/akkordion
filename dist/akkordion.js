@@ -35,12 +35,12 @@
 		}
 
 		if(el.style.WebkitTransition !== undefined) {
-			transition = '-webkit-transition-duration';
+			transition = '-webkit-transition';
 			transitionEnd = 'webkitTransitionEnd';
 		}
 
 		if(el.style.transition !== undefined) {
-			transition = 'transition-duration';
+			transition = 'transition';
 			transitionEnd = 'transitionend';
 		}
 	} ());
@@ -48,7 +48,8 @@
 
 	var defaults = {
 		single: true,
-		speed: 300
+		speed: 300,
+		opacity: false
 	};
 
 
@@ -187,8 +188,10 @@
 		var title = this.titleSet[index],
 			outer = this.outerSet[index],
 			content = this.contentSet[index],
-			transitionDuration = transition + ':' + this.options.speed + 'ms;',
-			height;
+			transitionDuration = transition + '-duration:' + this.options.speed + 'ms;',
+			transitionDelay = transition + '-delay:' + this.options.speed / 2 + 'ms;',
+			height,
+			hasOpacity = this.options.opacity;
 
 		if( ! transition || noAnim) {
 			this.setActive(index, true);
@@ -196,20 +199,27 @@
 		} else if( ! attr(outer, dataAnimating) && ! attr(outer, dataActive)) {
 			this.setActive(index, true);
 			attr(outer, dataAnimating, true);
-			attr(content, dataAnimating, true);
 
 			outer.style.height = 'auto';
 			height = getComputedStyle(outer).height;
 			outer.style.height = 0;
 			outer.offsetWidth;
 			outer.style.cssText = 'height:' + height + ';' + transitionDuration;
+
+			if(hasOpacity) {
+				content.style.cssText = 'height:auto;opacity:0;';
+				outer.offsetWidth;
+				content.style.cssText = 'height:auto;opacity:1;' + transitionDuration + transitionDelay;
+			}
 		}
 	}
 
 	bind.prototype.close = function (index, noAnim) {
 		var outer = this.outerSet[index];
 			content = this.contentSet[index],
-			transitionDuration = transition + ':' + this.options.speed + 'ms;';
+			transitionDuration = transition + '-duration:' + this.options.speed + 'ms;',
+			transitionDelay = transition + '-delay:' + this.options.speed / 3 + 'ms;',
+			hasOpacity = this.options.opacity;
 
 		if( ! transition || noAnim) {
 			this.setActive(index, false);
@@ -217,11 +227,16 @@
 		} else if( ! attr(outer, dataAnimating) && attr(outer, dataActive)) {
 			this.setActive(index, false);
 			attr(outer, dataAnimating, true);
-			attr(content, dataAnimating, true);
 
 			outer.style.height = getComputedStyle(outer).height;
 			outer.offsetHeight;
-			outer.style.cssText = 'height:0;' + transitionDuration;
+			outer.style.cssText = 'height:0;' + transitionDuration + (hasOpacity ? transitionDelay : '');
+
+			if(hasOpacity) {
+				content.style.cssText = 'height:auto;opacity:1;';
+				outer.offsetWidth;
+				content.style.cssText = 'height:auto;opacity:0;' + transitionDuration;
+			}
 		}
 	}
 
