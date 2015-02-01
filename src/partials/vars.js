@@ -35,8 +35,6 @@
 		single: true,
 		speed: 300,
 		opacity: false
-<<<<<<< HEAD
-=======
 	}, callbacks = {
 		'init': [],
 		'abort': [],
@@ -46,5 +44,4 @@
 		'beforeclose': [],
 		'close': [],
 		'afterclose': []
->>>>>>> master
 	};
