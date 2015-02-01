@@ -1,6 +1,8 @@
+
 	function trigger(event, root, title, content) {
 		var collection = callbacks[event],
-			result = true;
+			result = true,
+			i, max;
 
 		for(i = 0, max = collection.length; i < max; i++) {
 			result = collection[i].call(root, title, content) === false ? false : result;

@@ -190,8 +190,7 @@
 			content = this.contentSet[index],
 			transitionDuration = transition + '-duration:' + this.options.speed + 'ms;',
 			transitionDelay = transition + '-delay:' + this.options.speed / 3 + 'ms;',
-			hasOpacity = this.options.opacity,
-			result;
+			hasOpacity = this.options.opacity;
 
 		if( ! transition || noAnim) {
 			if( ! trigger('beforeclose', root, title, content)) {
