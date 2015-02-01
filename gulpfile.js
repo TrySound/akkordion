@@ -3,7 +3,6 @@ var gulp = require('gulp'),
 	uglify = require('gulp-uglify'),
 	header = require('gulp-header'),
 	include = require('gulp-file-include'),
-	pkg = JSON.parse(require('fs').readFileSync('package.json')),
 	template = ['/*!',
 				' * <%= name %> <%= version %>',
 				' * <%= description %>',
@@ -15,12 +14,14 @@ var gulp = require('gulp'),
 
 
 gulp.task('css', function () {
+	var pkg = JSON.parse(require('fs').readFileSync('package.json'));
 	return gulp.src('src/akkordion.css')
 		.pipe(header(template, pkg))
 		.pipe(gulp.dest('dist'));
 });
 
 gulp.task('js', function () {
+	var pkg = JSON.parse(require('fs').readFileSync('package.json'));
 	return gulp.src('src/akkordion.js')
 		.pipe(include('// @@'))
 		.pipe(header(template, pkg))
@@ -35,6 +36,6 @@ gulp.task('js', function () {
 gulp.task('default', ['css', 'js'])
 
 gulp.task('dev', ['default'], function () {
-	gulp.watch('src/**/*.js', ['js']);
-	gulp.watch('src/*.css', ['css']);
+	gulp.watch(['package.json', 'src/**/*.js'], ['js']);
+	gulp.watch(['package.json', 'src/*.css'], ['css']);
 })

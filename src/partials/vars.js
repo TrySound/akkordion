@@ -20,12 +20,12 @@
 		}
 
 		if(el.style.WebkitTransition !== undefined) {
-			transition = '-webkit-transition-duration';
+			transition = '-webkit-transition';
 			transitionEnd = 'webkitTransitionEnd';
 		}
 
 		if(el.style.transition !== undefined) {
-			transition = 'transition-duration';
+			transition = 'transition';
 			transitionEnd = 'transitionend';
 		}
 	} ());
@@ -33,5 +33,6 @@
 
 	var defaults = {
 		single: true,
-		speed: 300
+		speed: 300,
+		opacity: false
 	};
