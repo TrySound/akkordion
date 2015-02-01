@@ -5,6 +5,7 @@
 		this.cache();
 		this.setDefaultState();
 		this.bindEvents();
+		trigger('init', el);
 	};
 
 	bind.prototype.cache = function () {
@@ -104,15 +105,23 @@
 		on(this.root, transitionEnd, function (e) {
 			var el = e.target,
 				prop = e.propertyName,
-				index;
+				index, title, content;
 
 			if(prop === 'height' && (index = self.outerSet.indexOf(el)) > -1) {
+				title = self.titleSet[index];
+				content = self.contentSet[index];
+
 				attr(el, dataAnimating, null);
 				if(attr(el, dataActive)) {
 					el.style.cssText = 'height:auto;';
+					trigger('open', this, title, content);
+					trigger('afteropen', this, title, content);
 				} else {
 					el.style.cssText = 'height:0;';
+					trigger('close', this, title, content);
+					trigger('afterclose', this, title, content);
 				}
+
 			}
 		});
 	};
@@ -130,7 +139,8 @@
 	}
 
 	bind.prototype.open = function (index, noAnim) {
-		var title = this.titleSet[index],
+		var root = this.root,
+			title = this.titleSet[index],
 			outer = this.outerSet[index],
 			content = this.contentSet[index],
 			transitionDuration = transition + '-duration:' + this.options.speed + 'ms;',
@@ -139,9 +149,23 @@
 			hasOpacity = this.options.opacity;
 
 		if( ! transition || noAnim) {
+			if( ! trigger('beforeopen', root, title, content)) {
+				trigger('abort', root, title, content);
+				return;
+			}
+
 			this.setActive(index, true);
 			outer.style.cssText = 'height:auto;';
+
+			trigger('open', root, title, content);
+			trigger('afteropen', root, title, content);
+
 		} else if( ! attr(outer, dataAnimating) && ! attr(outer, dataActive)) {
+			if( ! trigger('beforeopen', root, title, content)) {
+				trigger('abort', root, title, content);
+				return;
+			}
+
 			this.setActive(index, true);
 			attr(outer, dataAnimating, true);
 
@@ -160,16 +184,33 @@
 	}
 
 	bind.prototype.close = function (index, noAnim) {
-		var outer = this.outerSet[index];
+		var root = this.root,
+			title = this.titleSet[index],
+			outer = this.outerSet[index],
 			content = this.contentSet[index],
 			transitionDuration = transition + '-duration:' + this.options.speed + 'ms;',
 			transitionDelay = transition + '-delay:' + this.options.speed / 3 + 'ms;',
-			hasOpacity = this.options.opacity;
+			hasOpacity = this.options.opacity,
+			result;
 
 		if( ! transition || noAnim) {
+			if( ! trigger('beforeclose', root, title, content)) {
+				trigger('abort', root, title, content);
+				return;
+			}
+
 			this.setActive(index, false);
 			outer.style.cssText = 'height:0;';
+
+			trigger('close', root, title, content);
+			trigger('afterclose', root, title, content);
+
 		} else if( ! attr(outer, dataAnimating) && attr(outer, dataActive)) {
+			if( ! trigger('beforeclose', root, title, content)) {
+				trigger('abort', root, title, content);
+				return;
+			}
+
 			this.setActive(index, false);
 			attr(outer, dataAnimating, true);
 

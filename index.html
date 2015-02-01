@@ -139,6 +139,28 @@ body {
 </div>
 
 <script src="dist/akkordion.js"></script>
+<script>
+
+akkordion.on('init', function (title, content) {
+	console.log('init', this);
+}).on('abort', function (title, content) {
+	console.log('abort', title);
+}).on('beforeOpen', function (title, content) {
+	console.log('before open', title);
+}).on('open', function (title, content) {
+	console.log('open', title);
+}).on('afterOpen', function (title, content) {
+	console.log('after open', title);
+}).on('beforeClose', function (title, content) {
+	console.log('before close', title);
+}).on('close', function (title, content) {
+	console.log('close', title);
+}).on('afterclose', function (title, content) {
+	console.log('after close', title);
+});
+
+</script>
+
 
 </body>
 </html>

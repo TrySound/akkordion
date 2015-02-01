@@ -35,4 +35,13 @@
 		single: true,
 		speed: 300,
 		opacity: false
+	}, callbacks = {
+		'init': [],
+		'abort': [],
+		'beforeopen': [],
+		'open': [],
+		'afteropen': [],
+		'beforeclose': [],
+		'close': [],
+		'afterclose': []
 	};
