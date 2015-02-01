@@ -53,6 +53,24 @@ akkordion(selector, options);
 
 `options.speed` - animation duration
 
+`options.opacity` - animate opacity
+
+##Callbacks
+```js
+akkordion.on(event, cb);
+```
+
+###Events
+
+- `init` - with every accordion-root element
+- `abort` - when `beforeOpen` or `beforeClose` will return `false`
+- `beforeOpen`
+- `open`
+- `afterOpen`
+- `beforeClose`
+- `close`
+- `afterClose`
+
 
 
 ##License
