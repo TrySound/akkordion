@@ -22,21 +22,21 @@ Use `.akkordion` className for initialize
 ```html
 <html>
 <head>
-  <link rel="stylesheet" href="bower_copmonents/akkordion/dist/akkordion.css">
+	<link rel="stylesheet" href="bower_copmonents/akkordion/dist/akkordion.css">
 </head>
 <body>
 
-  <div class="akkordion" data-akkordion-single="true" data-akkordion-speed="400">
-    <div class="akkordion-title">Title</div>
-    <div class="akkordion-content akkordion-active"><p>Content</p></div>
+	<div class="akkordion" data-akkordion-single="true" data-akkordion-speed="400">
+		<div class="akkordion-title">Title</div>
+		<div class="akkordion-content akkordion-active"><p>Content</p></div>
 
-    <div class="akkordion-title">Title</div>
-    <div class="akkordion-content"><p>Content</p></div>
+		<div class="akkordion-title">Title</div>
+		<div class="akkordion-content"><p>Content</p></div>
 
-    ...
-  </div>
+		...
+	</div>
 
-  <script src="bower_copmonents/akkordion/dist/akkordion.js"></script>
+	<script src="bower_copmonents/akkordion/dist/akkordion.js"></script>
 </body>
 </html>
 ```
@@ -63,11 +63,11 @@ akkordion.on(event, cb);
 ###Events
 
 - `init` - with every accordion-root element
-- `abort` - when `beforeOpen` or `beforeClose` will return `false`
-- `beforeOpen`
+- `abort` - after `beforeOpen` or `beforeClose` will return `false`
+- `beforeOpen` - prevent openning if return `false`
 - `open`
 - `afterOpen`
-- `beforeClose`
+- `beforeClose` - prevent closing if return `false`
 - `close`
 - `afterClose`
 
