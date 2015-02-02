@@ -1,6 +1,9 @@
 
-	function trigger(event, root, title, content) {
+	function trigger(event, inst, index) {
 		var collection = callbacks[event],
+			root = inst.root,
+			title = inst.titleSet[index],
+			content = inst.contentSet[index],
 			result = true,
 			i, max;
 
@@ -9,6 +12,13 @@
 		}
 
 		return result;
+	}
+
+	function setActive(inst, index, state) {
+		state = state ? true : null;
+		attr(inst.titleSet[index], dataActive, state);
+		attr(inst.outerSet[index], dataActive, state);
+		attr(inst.contentSet[index], dataActive, state);
 	}
 
 

@@ -142,21 +142,21 @@ body {
 <script>
 
 akkordion.on('init', function (title, content) {
-	console.log('init', this);
+	console && console.log('init', this);
 }).on('abort', function (title, content) {
-	console.log('abort', title);
+	console && console.log('abort', title);
 }).on('beforeOpen', function (title, content) {
-	console.log('before open', title);
+	console && console.log('before open', title);
 }).on('open', function (title, content) {
-	console.log('open', title);
+	console && console.log('open', title);
 }).on('afterOpen', function (title, content) {
-	console.log('after open', title);
+	console && console.log('after open', title);
 }).on('beforeClose', function (title, content) {
-	console.log('before close', title);
+	console && console.log('before close', title);
 }).on('close', function (title, content) {
-	console.log('close', title);
+	console && console.log('close', title);
 }).on('afterclose', function (title, content) {
-	console.log('after close', title);
+	console && console.log('after close', title);
 });
 
 </script>
