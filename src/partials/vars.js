@@ -15,8 +15,7 @@
 	}, PLUGIN_NAME = 'akkordion';
 
 
-	var transform = false,
-		transition = false,
+	var transition = false,
 		transitionEnd = false,
 		dataPrefix = 'data-' + PLUGIN_NAME + '-',
 		dataActive = dataPrefix + 'active',

@@ -38,10 +38,8 @@
 		for (i = 1, max = arguments.length; i < max; i++) {
 			options = arguments[i];
 			if (options != null) {
-				for (key in options) {
-					if(options.hasOwnProperty(key) && typeof options[key] !== 'undefined') {
-						result[key] = options[key];
-					}
+				for (key in options) if(options.hasOwnProperty(key) && options[key] !== undefined) {
+					result[key] = options[key];
 				}
 			}
 		}

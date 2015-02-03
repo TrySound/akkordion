@@ -8,7 +8,7 @@
  */
 
 (function (module) {
-	
+
 	window.akkordion = module(window, document)
 
 } (function (window, document, undefined) {
@@ -30,8 +30,7 @@
 	}, PLUGIN_NAME = 'akkordion';
 
 
-	var transform = false,
-		transition = false,
+	var transition = false,
 		transitionEnd = false,
 		dataPrefix = 'data-' + PLUGIN_NAME + '-',
 		dataActive = dataPrefix + 'active',
@@ -289,7 +288,7 @@
 	akkordion.on = function (event, cb) {
 		var collection = callbacks[(event = event.toLowerCase())];
 
-		if(collection && typeof collection.length === 'number' && typeof cb === 'function') {
+		if(collection && typeof cb === 'function') {
 			collection.push(cb);
 		}
 
@@ -298,7 +297,7 @@
 
 
 	on(document, 'DOMContentLoaded', function () {
-		akkordion('.akkordion');
+		akkordion('.' + PLUGIN_NAME);
 	});
 
 
@@ -345,10 +344,8 @@
 		for (i = 1, max = arguments.length; i < max; i++) {
 			options = arguments[i];
 			if (options != null) {
-				for (key in options) {
-					if(options.hasOwnProperty(key) && typeof options[key] !== 'undefined') {
-						result[key] = options[key];
-					}
+				for (key in options) if(options.hasOwnProperty(key) && options[key] !== undefined) {
+					result[key] = options[key];
 				}
 			}
 		}
