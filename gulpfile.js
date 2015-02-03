@@ -15,14 +15,14 @@ var gulp = require('gulp'),
 
 gulp.task('css', function () {
 	var pkg = JSON.parse(require('fs').readFileSync('package.json'));
-	return gulp.src('src/akkordion.css')
+	return gulp.src('src/' + pkg.name + '.css')
 		.pipe(header(template, pkg))
 		.pipe(gulp.dest('dist'));
 });
 
 gulp.task('js', function () {
 	var pkg = JSON.parse(require('fs').readFileSync('package.json'));
-	return gulp.src('src/akkordion.js')
+	return gulp.src('src/' + pkg.name + '.js')
 		.pipe(include('// @@'))
 		.pipe(header(template, pkg))
 		.pipe(gulp.dest('dist'))
