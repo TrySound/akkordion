@@ -4,6 +4,7 @@
 
 .akkordion-outer {
 	overflow: hidden;
+	height: 0;
 	transition-property: height;
 	transition-timing-function: ease-in-out;
 	will-change: height;

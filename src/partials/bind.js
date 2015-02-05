@@ -1,16 +1,18 @@
 
 	function bind(el, options) {
-		this.root = el;
-		this.options = extend({}, options, getDataAttrs(el, dataPrefix));
-		this.cache();
-		this.setDefaultState();
-		this.bindEvents();
-		trigger('init', this);
+		var self = this;
+		self.root = el;
+		self.options = extend({}, options, getDataAttrs(el, dataPrefix));
+		self.cache();
+		self.setDefaultState();
+		self.bindEvents();
+		trigger('init', self);
 	};
 
 	bind.prototype = {
 		cache: function () {
-			var root = this.root,
+			var self = this,
+				root = self.root,
 				elements = root.querySelectorAll('.' + PLUGIN_NAME + '-title'),
 				empty = document.createElement('div'),
 				titleSet = [],
@@ -44,31 +46,24 @@
 				}
 			}
 
-			this.titleSet = titleSet;
-			this.outerSet = outerSet;
-			this.contentSet = contentSet;
+			self.titleSet = titleSet;
+			self.outerSet = outerSet;
+			self.contentSet = contentSet;
 		},
 
 		setDefaultState: function () {
-			var titleSet = this.titleSet,
-				outerSet = this.outerSet,
-				contentSet = this.contentSet,
-				i, max, outer, content,
-				single = this.options.single,
-				initSingle = false;
+			var self = this,
+				outerSet = self.outerSet,
+				contentSet = self.contentSet,
+				i;
 
-			for(i = 0, max = titleSet.length; i < max; i++) {
-				outer = outerSet[i];
-				(content = contentSet[i]).style.height = 'auto';
+			for(i = outerSet.length - 1; i > -1; i--) {
+				contentSet[i].style.height = 'auto';
 
 				// States
-				if(content.className.indexOf(PLUGIN_NAME + '-active') > -1 && (single && ! initSingle || ! single)) {
-					initSingle = true;
-					attr(titleSet[i], dataActive, true);
-					attr(outer, dataActive, true);
-					attr(content, dataActive, true);
-				} else {
-					outer.style.height = 0;
+				if(contentSet[i].className.indexOf(PLUGIN_NAME + '-active') > -1) {
+					setActive(self, i, true);
+					outerSet[i].style.height = 'auto';
 				}
 			}
 		},
@@ -76,9 +71,10 @@
 		bindEvents: function () {
 			var self = this;
 
-			on(this.root, 'click', function (e) {
+			on(self.root, 'click', function (e) {
 				var title = e.target,
-					index = self.titleSet.indexOf(title),
+					titleSet = self.titleSet,
+					index = titleSet.indexOf(title),
 					i;
 
 				if(title.className.indexOf(PLUGIN_NAME + '-title') > -1) {
@@ -91,7 +87,7 @@
 					} else {
 						self.open(index);
 						if(self.options.single) {
-							for(i = self.outerSet.length -1; i > -1; i--) if(i !== index) {
+							for(i = titleSet.length -1; i > -1; i--) if(i !== index) {
 								self.close(i);
 							}
 						}
@@ -99,19 +95,18 @@
 				}
 			});
 
-			on(this.root, transitionEnd, function (e) {
+			on(self.root, transitionEnd, function (e) {
 				var el = e.target,
-					prop = e.propertyName,
-					index, title, content;
+					index;
 
-				if(prop === 'height' && (index = self.outerSet.indexOf(el)) > -1) {
+				if(e.propertyName === 'height' && (index = self.outerSet.indexOf(el)) > -1) {
 					attr(el, dataAnimating, null);
 					if(attr(el, dataActive)) {
 						el.style.cssText = 'height:auto;';
 						trigger('open', self, index);
 						trigger('afteropen', self, index);
 					} else {
-						el.style.cssText = 'height:0;';
+						el.style.cssText = '';
 						trigger('close', self, index);
 						trigger('afterclose', self, index);
 					}
@@ -121,34 +116,35 @@
 		},
 
 		open: function (index, noAnim) {
-			var outer = this.outerSet[index],
-				content = this.contentSet[index],
-				options = this.options,
+			var self = this,
+				outer = self.outerSet[index],
+				content = self.contentSet[index],
+				options = self.options,
 				opacity = options.opacity ? 'height:auto;opacity:' : false,
 				speed = options.speed,
 				transitionDuration = transition + '-duration:' + speed + 'ms;',
-				transitionDelay = transition + '-delay:' + speed / 2 + 'ms;',
+				transitionDelay = transition + '-delay:' + speed / 3 + 'ms;',
 				height;
 
 			if( ! transition || noAnim || speed === 0) {
-				if( ! trigger('beforeopen', this, index)) {
-					trigger('abort', this, index);
+				if( ! trigger('beforeopen', self, index)) {
+					trigger('abort', self, index);
 					return;
 				}
 
-				setActive(this, index, true);
+				setActive(self, index, true);
 				outer.style.cssText = 'height:auto;';
 
-				trigger('open', this, index);
-				trigger('afteropen', this, index);
+				trigger('open', self, index);
+				trigger('afteropen', self, index);
 
 			} else if( ! attr(outer, dataAnimating) && ! attr(outer, dataActive)) {
-				if( ! trigger('beforeopen', this, index)) {
-					trigger('abort', this, index);
+				if( ! trigger('beforeopen', self, index)) {
+					trigger('abort', self, index);
 					return;
 				}
 
-				setActive(this, index, true);
+				setActive(self, index, true);
 				attr(outer, dataAnimating, true);
 
 				outer.style.height = 'auto';
@@ -166,38 +162,39 @@
 		},
 
 		close: function (index, noAnim) {
-			var outer = this.outerSet[index],
-				content = this.contentSet[index],
-				options = this.options,
+			var self = this,
+				outer = self.outerSet[index],
+				content = self.contentSet[index],
+				options = self.options,
 				opacity = options.opacity ? 'height:auto;opacity:' : false,
 				speed = options.speed,
 				transitionDuration = transition + '-duration:' + speed + 'ms;',
 				transitionDelay = transition + '-delay:' + speed / 3 + 'ms;';
 
 			if( ! transition || noAnim || speed === 0) {
-				if( ! trigger('beforeclose', this, index)) {
-					trigger('abort', this, index);
+				if( ! trigger('beforeclose', self, index)) {
+					trigger('abort', self, index);
 					return;
 				}
 
-				setActive(this, index, false);
-				outer.style.cssText = 'height:0;';
+				setActive(self, index, false);
+				outer.style.cssText = '';
 
-				trigger('close', this, index);
-				trigger('afterclose', this, index);
+				trigger('close', self, index);
+				trigger('afterclose', self, index);
 
 			} else if( ! attr(outer, dataAnimating) && attr(outer, dataActive)) {
-				if( ! trigger('beforeclose', this, index)) {
-					trigger('abort', this, index);
+				if( ! trigger('beforeclose', self, index)) {
+					trigger('abort', self, index);
 					return;
 				}
 
-				setActive(this, index, false);
+				setActive(self, index, false);
 				attr(outer, dataAnimating, true);
 
 				outer.style.height = getComputedStyle(outer).height;
 				outer.offsetHeight;
-				outer.style.cssText = 'height:0;' + transitionDuration + (opacity ? transitionDelay : '');
+				outer.style.cssText = transitionDuration + (opacity ? transitionDelay : '');
 
 				if(opacity) {
 					content.style.cssText = opacity + '1;';
