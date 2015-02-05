@@ -19,6 +19,10 @@ bower i akkordion
 
 Use `.akkordion` className for initialize
 
+Add `.akkordion-active` className to content element to make it active at start. Note: any will be active even with option `single:true`
+
+P.S.: Recommend do not use vertical paddings on content to prevent flashing on start
+
 ```html
 <html>
 <head>
