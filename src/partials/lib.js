@@ -60,7 +60,7 @@
 				result[name.substring(prefixLength)] =
 					val === 'true' ? true :
 					val === 'false' ? false :
-					Number(val) !== NaN ? Number(val) : val;
+					isNaN(val) ? val : Number(val);
 			}
 		}
 
