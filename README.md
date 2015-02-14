@@ -55,9 +55,11 @@ akkordion(selector, options);
 
 `options.single` - collapse another on open
 
-`options.speed` - animation duration
+`options.speed` - animation duration (ms)
 
 `options.opacity` - animate opacity
+
+`options.hover` - hover delay (ms) or false to disable
 
 ##Callbacks
 ```js

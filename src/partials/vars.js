@@ -2,7 +2,8 @@
 	var defaults = {
 		single: true,
 		speed: 300,
-		opacity: false
+		opacity: false,
+		hover: false
 	}, callbacks = {
 		'init': [],
 		'abort': [],

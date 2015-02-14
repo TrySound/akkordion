@@ -69,9 +69,45 @@
 		},
 
 		bindEvents: function () {
-			var self = this;
+			var self = this,
+				mouseInst;
 
-			on(self.root, 'click', function (e) {
+			on(self.root, 'mouseover', function (e) {
+				var hover = self.options.hover;
+
+				if(hover !== false) {
+					mouseInst = setTimeout(function () {
+						push(e);
+					}, hover);
+				}
+			});
+
+			on(self.root, 'mouseout', function (e) {
+				clearTimeout(mouseInst);
+			});
+
+			on(self.root, 'click', push);
+
+			on(self.root, transitionEnd, function (e) {
+				var el = e.target,
+					index;
+
+				if(e.propertyName === 'height' && (index = self.outerSet.indexOf(el)) > -1) {
+					attr(el, dataAnimating, null);
+					if(attr(el, dataActive)) {
+						el.style.cssText = 'height:auto;';
+						trigger('open', self, index);
+						trigger('afteropen', self, index);
+					} else {
+						el.style.cssText = '';
+						trigger('close', self, index);
+						trigger('afterclose', self, index);
+					}
+
+				}
+			});
+
+			function push (e) {
 				var title = e.target,
 					titleSet = self.titleSet,
 					index = titleSet.indexOf(title),
@@ -93,26 +129,7 @@
 						}
 					}
 				}
-			});
-
-			on(self.root, transitionEnd, function (e) {
-				var el = e.target,
-					index;
-
-				if(e.propertyName === 'height' && (index = self.outerSet.indexOf(el)) > -1) {
-					attr(el, dataAnimating, null);
-					if(attr(el, dataActive)) {
-						el.style.cssText = 'height:auto;';
-						trigger('open', self, index);
-						trigger('afteropen', self, index);
-					} else {
-						el.style.cssText = '';
-						trigger('close', self, index);
-						trigger('afterclose', self, index);
-					}
-
-				}
-			});
+			}
 		},
 
 		open: function (index, noAnim) {
