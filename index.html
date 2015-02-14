@@ -64,6 +64,20 @@ body {
 	text-decoration: none;
 }
 
+.icon {
+	float: right;
+	font-size: 2em;
+	font-weight: bold;
+	line-height: 16px;
+	transform: rotate(135deg);
+	transition: transform 300ms;
+}
+
+.akkordion-title[data-akkordion-active] .icon {
+	transform: none;
+}
+
+
 	</style>
 </head>
 <body>
@@ -80,21 +94,22 @@ body {
 			<p class="lead"><small>VanillaJS Accordion Library</small></p>
 		</header>
 
-		<section class="akkordion panel panel-info" data-akkordion-single="true" data-akkordion-opacity="true">
-			<div class="akkordion-title panel-heading">Title 1</div>
+		<!-- <section class="akkordion panel panel-info" data-akkordion-single="true" data-akkordion-opacity="true"> -->
+		<section class="akkordion akkordion-fade panel panel-info" data-akkordion-single="true">
+			<div class="akkordion-title panel-heading">Title 1 <span class="icon">&times;</span></div>
 			<article class="akkordion-content akkordion-active">
 				<div class="panel-body">
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus facere, perspiciatis! Expedita?</p>
 					<p>Totam, facere, deleniti. Totam aliquid autem recusandae, error in tenetur ut rem.</p>
-					<section class="akkordion panel panel-info" data-akkordion-single="false" data-akkordion-hover="300">
-						<div class="akkordion-title panel-heading">Title 1</div>
+					<section class="akkordion akkordion-shiftY panel panel-info" data-akkordion-single="false" data-akkordion-hover="300">
+						<div class="akkordion-title panel-heading">Title 1 <span class="icon">&times;</span></div>
 						<article class="akkordion-content">
 							<div class="panel-body">
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia fugit officiis, suscipit perspiciatis, totam incidunt eos quaerat ad maxime quia numquam blanditiis quisquam aperiam officia minima consequatur, distinctio praesentium dolor, aspernatur sapiente possimus cupiditate. Recusandae earum error optio quidem possimus nisi sint sed, nulla, nostrum voluptas voluptatibus, esse, modi magni alias asperiores reiciendis! Cum, ab perferendis quis, ipsa pariatur repudiandae quas odio, autem error repellat doloremque beatae sapiente optio earum dolore nisi sed vero! Corporis, dicta quasi sed adipisci hic architecto mollitia magnam molestias itaque deserunt asperiores obcaecati? Facere nostrum dignissimos numquam possimus, illo beatae enim nam cumque consectetur. Harum.</p>
 							</div>
 						</article>
 						
-						<div class="akkordion-title panel-heading">Title 2</div>
+						<div class="akkordion-title panel-heading">Title 2 <span class="icon">&times;</span></div>
 						<article class="akkordion-content">
 							<div class="panel-body">
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere totam saepe voluptates nobis, maiores quia fugit reiciendis in exercitationem, enim pariatur fuga nisi accusantium! Non suscipit quaerat at iste earum libero odit, ex eos quisquam laudantium provident enim modi ad repellendus corrupti ullam tempore fugit vitae tempora sapiente natus dicta!</p>
@@ -105,7 +120,7 @@ body {
 			</article>
 
 			<div class="akkordion-title panel-heading">Disabled item without body</div>
-			<div class="akkordion-title panel-heading">Title 3</div>
+			<div class="akkordion-title panel-heading">Title 3 <span class="icon">&times;</span></div>
 			<article class="akkordion-content">
 				<div class="panel-body">
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum maiores sequi voluptate.</p>
@@ -113,7 +128,7 @@ body {
 				</div>
 			</article>
 
-			<div class="akkordion-title panel-heading">Title 4</div>
+			<div class="akkordion-title panel-heading">Title 4 <span class="icon">&times;</span></div>
 			<article class="akkordion-content">
 				<div class="panel-body">
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo sint earum repellat!</p>
@@ -121,7 +136,7 @@ body {
 				</div>
 			</article>
 
-			<div class="akkordion-title panel-heading">Title 5</div>
+			<div class="akkordion-title panel-heading">Title 5 <span class="icon">&times;</span></div>
 			<article class="akkordion-content">
 				<div class="panel-body">
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt quae perferendis, amet.</p>

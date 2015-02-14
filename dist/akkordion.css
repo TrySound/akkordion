@@ -31,3 +31,25 @@
 .akkordion-active {
 	height: auto;
 }
+
+.akkordion-content {
+	transition: opacity 500ms, transform 500ms;
+	will-change: opacity, transform;
+}
+
+.akkordion-fade .akkordion-content {
+	opacity: 0;
+}
+
+.akkordion-shiftY .akkordion-content {
+	transform: translateY(30px);
+}
+
+.akkordion-shiftX .akkordion-content {
+	transform: translateX(100px);
+}
+
+.akkordion-content[data-akkordion-active] {
+	opacity: 1;
+	transform: none;
+}

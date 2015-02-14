@@ -17,7 +17,6 @@
 	var defaults = {
 		single: true,
 		speed: 300,
-		opacity: false,
 		hover: false
 	}, callbacks = {
 		'init': [],
@@ -152,11 +151,9 @@
 					attr(el, dataAnimating, null);
 					if(attr(el, dataActive)) {
 						el.style.cssText = 'height:auto;';
-						trigger('open', self, index);
 						trigger('afteropen', self, index);
 					} else {
 						el.style.cssText = '';
-						trigger('close', self, index);
 						trigger('afterclose', self, index);
 					}
 
@@ -193,10 +190,7 @@
 				outer = self.outerSet[index],
 				content = self.contentSet[index],
 				options = self.options,
-				opacity = options.opacity ? 'height:auto;opacity:' : false,
 				speed = options.speed,
-				transitionDuration = transition + '-duration:' + speed + 'ms;',
-				transitionDelay = transition + '-delay:' + speed / 3 + 'ms;',
 				height;
 
 			if( ! transition || noAnim || speed === 0) {
@@ -224,13 +218,9 @@
 				height = getComputedStyle(outer).height;
 				outer.style.height = 0;
 				outer.offsetWidth;
-				outer.style.cssText = 'height:' + height + ';' + transitionDuration;
+				outer.style.cssText = 'height:' + height + ';' + transition + '-duration:' + speed + 'ms;';
 
-				if(opacity) {
-					content.style.cssText = opacity + '0;';
-					outer.offsetWidth;
-					content.style.cssText = opacity + '1;' + transitionDuration + transitionDelay;
-				}
+				trigger('open', self, index);
 			}
 		},
 
@@ -239,10 +229,7 @@
 				outer = self.outerSet[index],
 				content = self.contentSet[index],
 				options = self.options,
-				opacity = options.opacity ? 'height:auto;opacity:' : false,
-				speed = options.speed,
-				transitionDuration = transition + '-duration:' + speed + 'ms;',
-				transitionDelay = transition + '-delay:' + speed / 3 + 'ms;';
+				speed = options.speed;
 
 			if( ! transition || noAnim || speed === 0) {
 				if( ! trigger('beforeclose', self, index)) {
@@ -267,13 +254,9 @@
 
 				outer.style.height = getComputedStyle(outer).height;
 				outer.offsetHeight;
-				outer.style.cssText = transitionDuration + (opacity ? transitionDelay : '');
+				outer.style.cssText = transition + '-duration:' + speed + 'ms;';
 
-				if(opacity) {
-					content.style.cssText = opacity + '1;';
-					outer.offsetWidth;
-					content.style.cssText = opacity + '0;' + transitionDuration;
-				}
+				trigger('close', self, index);
 			}
 		}
 	}

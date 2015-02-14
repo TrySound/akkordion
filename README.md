@@ -9,11 +9,13 @@ VanillaJS Accordion Library
 - Could be nested
 - No need jQuery or other dependencies
 
+
 ##Install
 
 ```
 bower i akkordion
 ```
+
 
 ##Usage
 
@@ -51,15 +53,25 @@ or you may init custom elements
 akkordion(selector, options);
 ```
 
+##Effects
+
+Add to root element this classes
+
+- `.akkordion-fade` - for opacity animation
+- `.akkordion-shiftX` - to move 100px horizontally
+- `.akkordion-shiftY` - to move 30px vertically
+
+*Effects are inheritable*
+
+
 ##Options
 
 `options.single` - collapse another on open
 
 `options.speed` - animation duration (ms)
 
-`options.opacity` - animate opacity
-
 `options.hover` - hover delay (ms) or false to disable
+
 
 ##Callbacks
 ```js
