@@ -66,11 +66,9 @@ Add to root element this classes
 
 ##Options
 
-`options.single` - collapse another on open
-
-`options.speed` - animation duration (ms)
-
-`options.hover` - hover delay (ms) or false to disable
+- `options.single` - collapse another on open
+- `options.speed` - animation duration (ms)
+- `options.hover` - hover delay (ms) or false to disable
 
 
 ##Callbacks
