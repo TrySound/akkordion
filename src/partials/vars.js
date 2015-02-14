@@ -18,11 +18,10 @@
 
 	var transition = false,
 		transitionEnd = false,
-		dataPrefix = 'data-' + PLUGIN_NAME + '-',
-		dataActive = dataPrefix + 'active',
-		dataAnimating = dataPrefix + 'animating',
-		dataIndex = dataPrefix + 'index',
-		dataInit = dataPrefix + 'initialized';
+		dataActive = 'active',
+		dataAnimating = 'animating',
+		dataIndex = 'index',
+		dataInit = 'initialized';
 
 
 	(function () {

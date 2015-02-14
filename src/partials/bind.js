@@ -2,7 +2,7 @@
 	function bind(el, options) {
 		var self = this;
 		self.root = el;
-		self.options = extend({}, options, getDataAttrs(el, dataPrefix));
+		self.options = extend({}, options, getDataAttrs(el));
 		self.cache();
 		self.setDefaultState();
 		self.bindEvents();

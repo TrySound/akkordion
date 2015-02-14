@@ -33,11 +33,10 @@
 
 	var transition = false,
 		transitionEnd = false,
-		dataPrefix = 'data-' + PLUGIN_NAME + '-',
-		dataActive = dataPrefix + 'active',
-		dataAnimating = dataPrefix + 'animating',
-		dataIndex = dataPrefix + 'index',
-		dataInit = dataPrefix + 'initialized';
+		dataActive = 'active',
+		dataAnimating = 'animating',
+		dataIndex = 'index',
+		dataInit = 'initialized';
 
 
 	(function () {
@@ -59,7 +58,7 @@
 	function bind(el, options) {
 		var self = this;
 		self.root = el;
-		self.options = extend({}, options, getDataAttrs(el, dataPrefix));
+		self.options = extend({}, options, getDataAttrs(el));
 		self.cache();
 		self.setDefaultState();
 		self.bindEvents();
@@ -344,6 +343,7 @@
 
 
 	function attr(el, name, val) {
+		name = 'data-' + PLUGIN_NAME + '-' + name;
 		return val === undefined ? el.hasAttribute(name) :
 			val === null ? el.removeAttribute(name) : el.setAttribute(name, val);
 	}
@@ -368,17 +368,17 @@
 		return result;
 	}
 
-	function getDataAttrs(el, prefix) {
+	function getDataAttrs(el) {
 		var attrs = el.attributes,
-			prefixLength = prefix.length,
+			prefix = 'data-' + PLUGIN_NAME + '-',
 			i, name, val,
 			result = {};
 
 		for(i = attrs.length; i--; ) {
 			name = attrs[i].name;
 			val = attrs[i].value;
-			if(name.indexOf(prefix) > -1) {
-				result[name.substring(prefixLength)] =
+			if(name.indexOf(prefix) === 0) {
+				result[name.substring(prefix.length)] =
 					val === 'true' ? true :
 					val === 'false' ? false :
 					isNaN(val) ? val : Number(val);
