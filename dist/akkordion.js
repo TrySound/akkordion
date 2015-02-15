@@ -162,9 +162,7 @@
 
 			function push (e) {
 				var title = e.target,
-					titleSet = self.titleSet,
-					index = titleSet.indexOf(title),
-					i;
+					index = self.titleSet.indexOf(title);
 
 				if(title.className.indexOf(PLUGIN_NAME + '-title') > -1) {
 					e.preventDefault();
@@ -175,11 +173,6 @@
 						self.close(index);
 					} else {
 						self.open(index);
-						if(self.options.single) {
-							for(i = titleSet.length -1; i > -1; i--) if(i !== index) {
-								self.close(i);
-							}
-						}
 					}
 				}
 			}
@@ -187,11 +180,23 @@
 
 		open: function (index, noAnim) {
 			var self = this,
-				outer = self.outerSet[index],
-				content = self.contentSet[index],
+				outerSet = self.outerSet,
 				options = self.options,
 				speed = options.speed,
-				height;
+				height, i, outer;
+
+			index = index === -1 ? outerSet.length - 1 : index;
+			outer = outerSet[index];
+
+			if( ! outer) {
+				return false;
+			}
+
+			if(options.single) {
+				for(i = outerSet.length - 1; i > -1; i--) if(i !== index) {
+					self.close(i, noAnim);
+				}
+			}
 
 			if( ! transition || noAnim || speed === 0) {
 				if( ! trigger('beforeopen', self, index)) {
@@ -226,10 +231,15 @@
 
 		close: function (index, noAnim) {
 			var self = this,
-				outer = self.outerSet[index],
-				content = self.contentSet[index],
-				options = self.options,
-				speed = options.speed;
+				outerSet = self.outerSet,
+				speed = self.options.speed;
+
+			index = index === -1 ? outerSet.length - 1 : index;
+			outer = outerSet[index];
+
+			if( ! outer) {
+				return false;
+			}
 
 			if( ! transition || noAnim || speed === 0) {
 				if( ! trigger('beforeclose', self, index)) {
@@ -262,6 +272,9 @@
 	}
 
 
+
+	var registry = [];
+
 	/* Initialize */
 	function akkordion(elements, options) {
 		var options = extend({}, defaults, options),
@@ -276,7 +289,7 @@
 			el = elements[i];
 			if( ! attr(el, dataInit)) {
 				attr(el, dataInit, true);
-				new bind(el, options);
+				registry.push(new bind(el, options));
 			}
 		}
 	}
@@ -290,6 +303,22 @@
 		}
 
 		return akkordion;
+	};
+
+	akkordion.open = function (root, index, noanim) {
+		if(root) {
+			for(i = registry.length - 1; i > -1; i--) if(registry[i].root === root) {
+				return registry[i].open(Number(index), noanim) !== false;
+			}
+		}
+	};
+
+	akkordion.close = function (root, index, noanim) {
+		if(root) {
+			for(i = registry.length - 1; i > -1; i--) if(registry[i].root === root) {
+				return registry[i].close(Number(index), noanim) !== false;
+			}
+		}
 	};
 
 

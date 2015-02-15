@@ -8,6 +8,9 @@
 
 // @@include('partials/bind.js')
 
+
+	var registry = [];
+
 	/* Initialize */
 	function akkordion(elements, options) {
 		var options = extend({}, defaults, options),
@@ -22,7 +25,7 @@
 			el = elements[i];
 			if( ! attr(el, dataInit)) {
 				attr(el, dataInit, true);
-				new bind(el, options);
+				registry.push(new bind(el, options));
 			}
 		}
 	}
@@ -36,6 +39,22 @@
 		}
 
 		return akkordion;
+	};
+
+	akkordion.open = function (root, index, noanim) {
+		if(root) {
+			for(i = registry.length - 1; i > -1; i--) if(registry[i].root === root) {
+				return registry[i].open(Number(index), noanim) !== false;
+			}
+		}
+	};
+
+	akkordion.close = function (root, index, noanim) {
+		if(root) {
+			for(i = registry.length - 1; i > -1; i--) if(registry[i].root === root) {
+				return registry[i].close(Number(index), noanim) !== false;
+			}
+		}
 	};
 
 

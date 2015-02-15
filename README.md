@@ -70,13 +70,28 @@ Add to root element this classes
 - `options.speed` - animation duration (ms)
 - `options.hover` - hover delay (ms) or false to disable
 
+##Methods
 
-##Callbacks
+`root` - HTMLElement initialized by akkordion
+
+`index` is index of valid (with title and content) item. Could be equal `-1` for last
+
+`noAnim` - prevent height animation (don't prevent effects)
+
+`return false` if index exists
+
 ```js
-akkordion.on(event, cb);
+// Open content
+akkordion.open(root, index, noAnim);
+// Close content
+akkordion.close(root, index, noAnim);
 ```
 
-###Events
+```js
+akkordion.on(event, callback);
+```
+
+####Events
 
 - `init` - with every accordion-root element
 - `abort` - after `beforeOpen` or `beforeClose` will return `false`

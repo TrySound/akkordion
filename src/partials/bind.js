@@ -126,13 +126,15 @@
 		open: function (index, noAnim) {
 			var self = this,
 				outerSet = self.outerSet,
-				outer = outerSet[index],
 				options = self.options,
 				speed = options.speed,
-				height, i;
+				height, i, outer;
+
+			index = index === -1 ? outerSet.length - 1 : index;
+			outer = outerSet[index];
 
 			if( ! outer) {
-				return;
+				return false;
 			}
 
 			if(options.single) {
@@ -174,11 +176,14 @@
 
 		close: function (index, noAnim) {
 			var self = this,
-				outer = self.outerSet[index],
+				outerSet = self.outerSet,
 				speed = self.options.speed;
 
+			index = index === -1 ? outerSet.length - 1 : index;
+			outer = outerSet[index];
+
 			if( ! outer) {
-				return;
+				return false;
 			}
 
 			if( ! transition || noAnim || speed === 0) {
