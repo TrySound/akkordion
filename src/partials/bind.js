@@ -107,9 +107,7 @@
 
 			function push (e) {
 				var title = e.target,
-					titleSet = self.titleSet,
-					index = titleSet.indexOf(title),
-					i;
+					index = self.titleSet.indexOf(title);
 
 				if(title.className.indexOf(PLUGIN_NAME + '-title') > -1) {
 					e.preventDefault();
@@ -120,11 +118,6 @@
 						self.close(index);
 					} else {
 						self.open(index);
-						if(self.options.single) {
-							for(i = titleSet.length -1; i > -1; i--) if(i !== index) {
-								self.close(i);
-							}
-						}
 					}
 				}
 			}
@@ -132,11 +125,21 @@
 
 		open: function (index, noAnim) {
 			var self = this,
-				outer = self.outerSet[index],
-				content = self.contentSet[index],
+				outerSet = self.outerSet,
+				outer = outerSet[index],
 				options = self.options,
 				speed = options.speed,
-				height;
+				height, i;
+
+			if( ! outer) {
+				return;
+			}
+
+			if(options.single) {
+				for(i = outerSet.length - 1; i > -1; i--) if(i !== index) {
+					self.close(i, noAnim);
+				}
+			}
 
 			if( ! transition || noAnim || speed === 0) {
 				if( ! trigger('beforeopen', self, index)) {
@@ -172,9 +175,11 @@
 		close: function (index, noAnim) {
 			var self = this,
 				outer = self.outerSet[index],
-				content = self.contentSet[index],
-				options = self.options,
-				speed = options.speed;
+				speed = self.options.speed;
+
+			if( ! outer) {
+				return;
+			}
 
 			if( ! transition || noAnim || speed === 0) {
 				if( ! trigger('beforeclose', self, index)) {
