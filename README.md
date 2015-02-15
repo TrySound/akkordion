@@ -72,22 +72,17 @@ Add to root element this classes
 
 ##Methods
 
-`root` - HTMLElement initialized by akkordion
-
-`index` is index of valid (with title and content) item. Could be equal `-1` for last
-
-`noAnim` - prevent height animation (don't prevent effects)
-
-`return false` if index exists
+- `root` - HTMLElement initialized by akkordion
+- `index` is index of valid (with title and content) item. Could be equal `-1` for last
+- `noAnim` - prevent height animation (don't prevent effects)
+- `return false` if index exists
 
 ```js
 // Open content
 akkordion.open(root, index, noAnim);
 // Close content
 akkordion.close(root, index, noAnim);
-```
-
-```js
+// Event listener
 akkordion.on(event, callback);
 ```
 
