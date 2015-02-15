@@ -75,7 +75,7 @@ Add to root element this classes
 - `root` - HTMLElement initialized by akkordion
 - `index` is index of valid (with title and content) item. Could be equal `-1` for last
 - `noAnim` - prevent height animation (don't prevent effects)
-- `return false` if index exists
+- `return true` if index exists else `false`
 
 ```js
 // Open content
