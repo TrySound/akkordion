@@ -1,5 +1,5 @@
 /*!
- * akkordion 0.2.0
+ * akkordion 0.2.1
  * Accordion UI Element
  * https://github.com/TrySound/akkordion
  * 
@@ -125,9 +125,10 @@
 
 		bindEvents: function () {
 			var self = this,
+				root = self.root,
 				mouseInst;
 
-			on(self.root, 'mouseover', function (e) {
+			on(root, 'mouseover', function (e) {
 				var hover = self.options.hover;
 
 				if(hover !== false) {
@@ -137,13 +138,13 @@
 				}
 			});
 
-			on(self.root, 'mouseout', function (e) {
+			on(root, 'mouseout', function (e) {
 				clearTimeout(mouseInst);
 			});
 
-			on(self.root, 'click', push);
+			on(root, 'click', push);
 
-			on(self.root, transitionEnd, function (e) {
+			on(root, transitionEnd, function (e) {
 				var el = e.target,
 					index;
 
@@ -161,11 +162,16 @@
 			});
 
 			function push (e) {
-				var title = e.target,
-					index = self.titleSet.indexOf(title);
+				var titleSet = self.titleSet,
+					el = e.target,
+					title = el,
+					index;
 
-				if(title.className.indexOf(PLUGIN_NAME + '-title') > -1) {
-					e.preventDefault();
+				while(root !== title) {
+					if((index = titleSet.indexOf(title)) > -1) {
+						break;
+					}
+					title = title.parentNode;
 				}
 
 				if(index > -1) {
@@ -174,6 +180,8 @@
 					} else {
 						self.open(index);
 					}
+
+					e.preventDefault();
 				}
 			}
 		},
