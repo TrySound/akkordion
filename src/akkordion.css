@@ -5,8 +5,7 @@
 .akkordion-outer {
 	overflow: hidden;
 	height: 0;
-	transition-property: height;
-	transition-timing-function: ease-in-out;
+	transition: height easeOutQuart;
 	will-change: height;
 }
 
@@ -14,18 +13,12 @@
 	box-sizing: border-box;
 	overflow: hidden;
 	height: 0;
-	transition-property: opacity;
-	transition-timing-function: ease-in-out;
-	will-change: opacity;
+	transition: opacity 500ms easeOutQuart, transform 500ms easeOutQuart;
+	will-change: opacity, transform;
 }
 
 .akkordion-active {
 	height: auto;
-}
-
-.akkordion-content {
-	transition: opacity 500ms, transform 500ms;
-	will-change: opacity, transform;
 }
 
 .akkordion-fade .akkordion-content {

@@ -1,5 +1,5 @@
 /*!
- * akkordion 0.2.1
+ * akkordion 0.2.2
  * Accordion UI Element
  * https://github.com/TrySound/akkordion
  * 
@@ -14,8 +14,7 @@
 .akkordion-outer {
 	overflow: hidden;
 	height: 0;
-	transition-property: height;
-	transition-timing-function: ease-in-out;
+	transition: height cubic-bezier(0.165, 0.84, 0.44, 1);
 	will-change: height;
 }
 
@@ -23,18 +22,13 @@
 	box-sizing: border-box;
 	overflow: hidden;
 	height: 0;
-	transition-property: opacity;
-	transition-timing-function: ease-in-out;
-	will-change: opacity;
+	transition: opacity 500ms cubic-bezier(0.165, 0.84, 0.44, 1), -webkit-transform 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
+	transition: opacity 500ms cubic-bezier(0.165, 0.84, 0.44, 1), transform 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
+	will-change: opacity, transform;
 }
 
 .akkordion-active {
 	height: auto;
-}
-
-.akkordion-content {
-	transition: opacity 500ms, transform 500ms;
-	will-change: opacity, transform;
 }
 
 .akkordion-fade .akkordion-content {
@@ -42,14 +36,17 @@
 }
 
 .akkordion-shiftY .akkordion-content {
-	transform: translateY(30px);
+	-webkit-transform: translateY(30px);
+	        transform: translateY(30px);
 }
 
 .akkordion-shiftX .akkordion-content {
-	transform: translateX(100px);
+	-webkit-transform: translateX(100px);
+	        transform: translateX(100px);
 }
 
 .akkordion-content[data-akkordion-active] {
 	opacity: 1;
-	transform: none;
+	-webkit-transform: none;
+	        transform: none;
 }

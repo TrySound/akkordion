@@ -1,5 +1,5 @@
 /*!
- * akkordion 0.2.1
+ * akkordion 0.2.2
  * Accordion UI Element
  * https://github.com/TrySound/akkordion
  * 
@@ -16,7 +16,7 @@
 
 	var defaults = {
 		single: true,
-		speed: 300,
+		speed: 350,
 		hover: false
 	}, callbacks = {
 		'init': [],
@@ -40,11 +40,6 @@
 
 	(function () {
 		var el = document.createElement("div");
-
-		if(el.style.WebkitTransition !== undefined) {
-			transition = '-webkit-transition';
-			transitionEnd = 'webkitTransitionEnd';
-		}
 
 		if(el.style.transition !== undefined) {
 			transition = 'transition';

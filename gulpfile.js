@@ -3,6 +3,7 @@ var gulp = require('gulp'),
 	uglify = require('gulp-uglify'),
 	header = require('gulp-header'),
 	include = require('gulp-file-include'),
+	postcss = require('gulp-postcss'),
 	template = ['/*!',
 				' * <%= name %> <%= version %>',
 				' * <%= description %>',
@@ -16,6 +17,10 @@ var gulp = require('gulp'),
 gulp.task('css', function () {
 	var pkg = JSON.parse(require('fs').readFileSync('package.json'));
 	return gulp.src('src/' + pkg.name + '.css')
+		.pipe(postcss([
+			require('postcss-easings')(),
+			require('autoprefixer-core')('last 2 versions')
+		]))
 		.pipe(header(template, pkg))
 		.pipe(gulp.dest('dist'));
 });

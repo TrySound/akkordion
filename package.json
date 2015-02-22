@@ -1,6 +1,6 @@
 {
   "name": "akkordion",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Accordion UI Element",
   "readme": "README.md",
   "main": "gulpfile.js",
@@ -18,10 +18,13 @@
   },
   "homepage": "https://github.com/TrySound/akkordion",
   "devDependencies": {
+    "autoprefixer-core": "^5.1.7",
     "gulp": "^3.8.10",
     "gulp-file-include": "^0.8.0",
     "gulp-header": "^1.2.2",
+    "gulp-postcss": "^4.0.3",
     "gulp-rename": "^1.2.0",
-    "gulp-uglify": "^1.1.0"
+    "gulp-uglify": "^1.1.0",
+    "postcss-easings": "^0.1.0"
   }
 }
