@@ -1,5 +1,5 @@
 /*!
- * akkordion 0.2.2
+ * akkordion 0.2.3
  * Accordion UI Element
  * https://github.com/TrySound/akkordion
  * 
@@ -309,20 +309,32 @@
 	};
 
 	akkordion.open = function (root, index, noanim) {
-		if(root) {
-			for(i = registry.length - 1; i > -1; i--) if(registry[i].root === root) {
-				return registry[i].open(Number(index), noanim) !== false;
-			}
-		}
+		action(root, index, noanim, 'open');
 	};
 
 	akkordion.close = function (root, index, noanim) {
+		action(root, index, noanim, 'close');
+	};
+
+	function action(root, index, noanim, method) {
+		var inst, next;
+
 		if(root) {
 			for(i = registry.length - 1; i > -1; i--) if(registry[i].root === root) {
-				return registry[i].close(Number(index), noanim) !== false;
+				inst = registry[i];
+
+				if( ! Number.isInteger(index)) {
+					if(next = inst.titleSet.indexOf(index) > -1) {
+						index = next;
+					} else if(next = inst.contentSet.indexOf(index) > -1) {
+						index = next;
+					}
+				}
+
+				return inst[method](Number(index), noanim) !== false;
 			}
 		}
-	};
+	}
 
 
 	on(document, 'DOMContentLoaded', function () {
