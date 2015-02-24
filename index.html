@@ -119,13 +119,8 @@ body {
 			</article>
 
 			<div class="akkordion-title panel-heading">Disabled item without body <span class="icon">&times;</span></div>
-			<div class="akkordion-title panel-heading">Title 3 <span class="icon">&times;</span></div>
-			<article class="akkordion-content">
-				<div class="panel-body">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum maiores sequi voluptate.</p>
-					<p>Nisi aperiam omnis, officia tenetur officiis repellat id, deleniti expedita explicabo cumque.</p>
-				</div>
-			</article>
+			<div class="akkordion-title panel-heading">Dynamic content loading with 1 second delays <span class="icon">&times;</span></div>
+			<article class="akkordion-content" data-empty-content></article>
 
 			<div class="akkordion-title panel-heading">Title 4 <span class="icon">&times;</span></div>
 			<article class="akkordion-content">
@@ -155,6 +150,30 @@ body {
 
 <script src="dist/akkordion.js"></script>
 <script>
+
+// Dynamic content loading
+akkordion.on('beforeopen', function (title, content) {
+	var root = this,
+		i = 15, html = [];
+
+	if(content.hasAttribute('data-empty-content')) {
+		content.removeAttribute('data-empty-content');
+
+		html.push('<div class="panel-body">');
+		while(i--) {
+			html.push('<p>Content ' + i + ', Content ' + i + ', Content ' + i + '</p>');
+		}
+		html.push('</div>');
+		content.innerHTML = html.join('');
+
+		setTimeout(function () {
+			akkordion.open(root, content);
+		}, 1000);
+
+		return false;
+	}
+})
+
 
 akkordion.on('init', function (title, content) {
 	console && console.log('init', this);
