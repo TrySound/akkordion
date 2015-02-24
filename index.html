@@ -153,20 +153,21 @@ body {
 
 // Dynamic content loading
 akkordion.on('beforeopen', function (title, content) {
-	var root = this,
-		i = 15, html = [];
+	var root = this;
 
 	if(content.hasAttribute('data-empty-content')) {
-		content.removeAttribute('data-empty-content');
-
-		html.push('<div class="panel-body">');
-		while(i--) {
-			html.push('<p>Content ' + i + ', Content ' + i + ', Content ' + i + '</p>');
-		}
-		html.push('</div>');
-		content.innerHTML = html.join('');
 
 		setTimeout(function () {
+			var i = 15, html = [];
+			content.removeAttribute('data-empty-content');
+
+			html.push('<div class="panel-body">');
+			while(i--) {
+				html.push('<p>Content ' + i + ', Content ' + i + ', Content ' + i + '</p>');
+			}
+			html.push('</div>');
+			content.innerHTML = html.join('');
+
 			akkordion.open(root, content);
 		}, 1000);
 

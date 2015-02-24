@@ -1,5 +1,5 @@
 /*!
- * akkordion 0.2.3
+ * akkordion 0.2.4
  * Accordion UI Element
  * https://github.com/TrySound/akkordion
  * 
@@ -220,13 +220,15 @@
 				}
 
 				setActive(self, index, true);
-				attr(outer, dataAnimating, true);
 
 				outer.style.height = 'auto';
 				height = getComputedStyle(outer).height;
-				outer.style.height = 0;
-				outer.offsetWidth;
-				outer.style.cssText = 'height:' + height + ';' + transition + '-duration:' + speed + 'ms;';
+				if(height !== '0px') {
+					attr(outer, dataAnimating, true);
+					outer.style.height = 0;
+					outer.offsetWidth;
+					outer.style.cssText = 'height:' + height + ';' + transition + '-duration:' + speed + 'ms;';
+				}
 
 				trigger('open', self, index);
 			}
