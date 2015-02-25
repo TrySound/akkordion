@@ -7,78 +7,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
 	<title>Akkordion by TrySound</title>
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.min.css">
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.2/css/materialize.min.css"> -->
 	<link rel="stylesheet" href="dist/akkordion.css">
+	<link rel="stylesheet" href="style.css">
 	<!-- <link rel="shortcut icon" type="image/ico" href="img/favicon.ico"> -->
-	<style>
-
-body {
-	overflow-y: scroll;
-}
-
-.wrapper {
-	position: relative;
-	overflow: hidden;
-	padding-bottom: 20px;
-}
-
-.panel-heading.panel-heading {
-	border: 1px solid #fff;
-	-webkit-user-select: none;
-}
-
-.ribbon {
-	background-color: #bce8f1;
-	overflow: hidden;
-	white-space: nowrap;
-	position: absolute;
-	right: -50px;
-	top: 40px;
-	-webkit-transform: rotate(45deg);
-	-ms-transform: rotate(45deg);
-	transform: rotate(45deg);
-	box-shadow: 0 0 8px rgba(0, 0, 0, .5);
-}
-
-@-webkit-keyframes pulse {
-	50% {box-shadow: 0 0 10px rgba(0, 0, 0, .2);}
-}
-
-@keyframes pulse {
-	50% {box-shadow: 0 0 10px rgba(0, 0, 0, .2);}
-}
-
-.ribbon:hover {
-	-webkit-animation: pulse .5s infinite;
-	animation: pulse .5s infinite;
-}
-
-.ribbon a {
-	border: 1px solid #31708f;
-	color: #31708f;
-	display: block;
-	font: bold .875em 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	margin: 1px 0;
-	padding: 10px 50px;
-	text-align: center;
-	text-decoration: none;
-}
-
-.icon {
-	float: right;
-	font-size: 2em;
-	font-weight: bold;
-	line-height: 16px;
-	transform: rotate(135deg);
-	transition: transform 300ms;
-}
-
-.akkordion-title[data-akkordion-active] .icon {
-	transform: none;
-}
-
-
-	</style>
 </head>
 <body>
 
@@ -89,28 +22,28 @@ body {
 	</div>
 
 	<main class="container">
-		<header class="page-header">
+		<header class="header">
 			<h1>Akkordion</h1>
-			<p class="lead"><small>VanillaJS Accordion Library</small></p>
+			<p>VanillaJS Accordion Library</p>
 		</header>
 
-		<section class="akkordion akkordion-fade panel panel-info" data-akkordion-single="true">
-			<div class="akkordion-title panel-heading">Title 1 <span class="icon">&times;</span></div>
+		<section class="akkordion akkordion-fade collection with-header" data-akkordion-single="true">
+			<div class="akkordion-title collection-header">Title 1 <span class="icon">&times;</span></div>
 			<article class="akkordion-content akkordion-active">
-				<div class="panel-body">
+				<div class="collection-item">
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus facere, perspiciatis! Expedita?</p>
 					<p>Totam, facere, deleniti. Totam aliquid autem recusandae, error in tenetur ut rem.</p>
-					<section class="akkordion akkordion-shiftY panel panel-info" data-akkordion-single="false" data-akkordion-hover="300">
-						<div class="akkordion-title panel-heading">Title 1 <span class="icon">&times;</span></div>
+					<section class="akkordion akkordion-shiftY" data-akkordion-single="false" data-akkordion-hover="300">
+						<div class="akkordion-title collection-header">Title 1 <span class="icon">&times;</span></div>
 						<article class="akkordion-content">
-							<div class="panel-body">
+							<div class="collection-item">
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia fugit officiis, suscipit perspiciatis, totam incidunt eos quaerat ad maxime quia numquam blanditiis quisquam aperiam officia minima consequatur, distinctio praesentium dolor, aspernatur sapiente possimus cupiditate. Recusandae earum error optio quidem possimus nisi sint sed, nulla, nostrum voluptas voluptatibus, esse, modi magni alias asperiores reiciendis! Cum, ab perferendis quis, ipsa pariatur repudiandae quas odio, autem error repellat doloremque beatae sapiente optio earum dolore nisi sed vero! Corporis, dicta quasi sed adipisci hic architecto mollitia magnam molestias itaque deserunt asperiores obcaecati? Facere nostrum dignissimos numquam possimus, illo beatae enim nam cumque consectetur. Harum.</p>
 							</div>
 						</article>
 						
-						<div class="akkordion-title panel-heading">Title 2 <span class="icon">&times;</span></div>
+						<div class="akkordion-title collection-header">Title 2 <span class="icon">&times;</span></div>
 						<article class="akkordion-content">
-							<div class="panel-body">
+							<div class="collection-item">
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere totam saepe voluptates nobis, maiores quia fugit reiciendis in exercitationem, enim pariatur fuga nisi accusantium! Non suscipit quaerat at iste earum libero odit, ex eos quisquam laudantium provident enim modi ad repellendus corrupti ullam tempore fugit vitae tempora sapiente natus dicta!</p>
 							</div>
 						</article>
@@ -118,34 +51,31 @@ body {
 				</div>
 			</article>
 
-			<div class="akkordion-title panel-heading">Disabled item without body <span class="icon">&times;</span></div>
-			<div class="akkordion-title panel-heading">Dynamic content loading with 1 second delays <span class="icon">&times;</span></div>
+			<div class="akkordion-title collection-header">Disabled item without body <span class="icon">&times;</span></div>
+			<div class="akkordion-title collection-header">Dynamic content loading with 1 second delays <span class="icon">&times;</span></div>
 			<article class="akkordion-content" data-empty-content></article>
 
-			<div class="akkordion-title panel-heading">Title 4 <span class="icon">&times;</span></div>
+			<div class="akkordion-title collection-header">Title 4 <span class="icon">&times;</span></div>
 			<article class="akkordion-content">
-				<div class="panel-body">
+				<div class="collection-item">
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo sint earum repellat!</p>
 					<p>Dolorem sint ad aliquam enim exercitationem! Quibusdam veniam at consectetur distinctio ex.</p>
 				</div>
 			</article>
 
-			<div class="akkordion-title panel-heading">Title 5 <span class="icon">&times;</span></div>
+			<div class="akkordion-title collection-header">Title 5 <span class="icon">&times;</span></div>
 			<article class="akkordion-content">
-				<div class="panel-body">
+				<div class="collection-item">
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt quae perferendis, amet.</p>
 					<p>Fuga consequatur esse dolores ea quam nulla soluta velit, quisquam, consequuntur labore?</p>
 				</div>
 			</article>
 		</section>
 
-		<hr>
-
-		<footer class="text-center">
+		<footer class="footer">
 			<small>&copy; 2015 by <a href="https://github.com/trysound">TrySound</a></small>
 		</footer>
 	</main>
-
 </div>
 
 <script src="dist/akkordion.js"></script>
@@ -161,7 +91,7 @@ akkordion.on('beforeopen', function (title, content) {
 			var i = 15, html = [];
 			content.removeAttribute('data-empty-content');
 
-			html.push('<div class="panel-body">');
+			html.push('<div class="collection-item">');
 			while(i--) {
 				html.push('<p>Content ' + i + ', Content ' + i + ', Content ' + i + '</p>');
 			}
