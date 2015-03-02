@@ -64,7 +64,7 @@
 					}
 				}
 
-				return inst[method](Number(index), noanim) !== false;
+				return !! inst[method](Number(index), noanim);
 			}
 		}
 	}

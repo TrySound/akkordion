@@ -5,7 +5,6 @@
 		hover: false
 	}, callbacks = {
 		'init': [],
-		'abort': [],
 		'beforeopen': [],
 		'open': [],
 		'afteropen': [],
@@ -18,7 +17,7 @@
 	var transition = false,
 		transitionEnd = false,
 		dataActive = 'active',
-		dataAnimating = 'animating',
+		dataAnim = 'animating',
 		dataIndex = 'index',
 		dataInit = 'initialized';
 

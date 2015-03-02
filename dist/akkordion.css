@@ -1,5 +1,5 @@
 /*!
- * akkordion 0.2.4
+ * akkordion 0.2.5
  * Accordion UI Element
  * https://github.com/TrySound/akkordion
  * 
@@ -9,6 +9,10 @@
 
 .akkordion-title {
 	cursor: pointer;
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	    -ms-user-select: none;
+	        user-select: none;
 }
 
 .akkordion-outer {

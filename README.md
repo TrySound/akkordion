@@ -89,7 +89,6 @@ akkordion.on(event, callback);
 ####Events
 
 - `init` - with every accordion-root element
-- `abort` - after `beforeOpen` or `beforeClose` will return `false`
 - `beforeOpen` - prevent openning if return `false`
 - `open`
 - `afterOpen`

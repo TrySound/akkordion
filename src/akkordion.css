@@ -1,5 +1,6 @@
 .akkordion-title {
 	cursor: pointer;
+	user-select: none;
 }
 
 .akkordion-outer {

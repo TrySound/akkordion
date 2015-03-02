@@ -1,5 +1,5 @@
 /*!
- * akkordion 0.2.4
+ * akkordion 0.2.5
  * Accordion UI Element
  * https://github.com/TrySound/akkordion
  * 
@@ -20,7 +20,6 @@
 		hover: false
 	}, callbacks = {
 		'init': [],
-		'abort': [],
 		'beforeopen': [],
 		'open': [],
 		'afteropen': [],
@@ -33,7 +32,7 @@
 	var transition = false,
 		transitionEnd = false,
 		dataActive = 'active',
-		dataAnimating = 'animating',
+		dataAnim = 'animating',
 		dataIndex = 'index',
 		dataInit = 'initialized';
 
@@ -54,7 +53,6 @@
 		self.root = el;
 		self.options = extend({}, options, getDataAttrs(el));
 		self.cache();
-		self.setDefaultState();
 		self.bindEvents();
 		trigger('init', self);
 	};
@@ -63,57 +61,36 @@
 		cache: function () {
 			var self = this,
 				root = self.root,
-				elements = root.querySelectorAll('.' + PLUGIN_NAME + '-title'),
+				children = root.children,
 				empty = document.createElement('div'),
 				titleSet = [],
 				contentSet = [],
 				outerSet = [],
-				i, title, content, outer;
-
-			empty.className = PLUGIN_NAME + '-outer';
-			for(i = elements.length - 1; i > -1; i--) {
-
-				// Exclude nested structures
-				if((title = elements[i]).parentNode === root) {
-
-					// Get next non-text node
-					content = ! (content = title.nextSibling) ? null : content.nodeType === 1 ? content :
-								! (content = content.nextSibling) ? null : content.nodeType === 1 ? content : null;
-
-					// Check is content
-					content = content && content.className.indexOf(PLUGIN_NAME + '-content') > -1 ? content : null;
-
-					// Make outer and add to sets
-					if(content) {
-						titleSet.unshift(title);
-						
-						outer = empty.cloneNode();
-						outer.appendChild(root.replaceChild(outer, content));
-						outerSet.unshift(outer);
-						contentSet.unshift(content);
-					}
-
-				}
-			}
+				classList, i, title, content, outer;
 
 			self.titleSet = titleSet;
 			self.outerSet = outerSet;
 			self.contentSet = contentSet;
-		},
 
-		setDefaultState: function () {
-			var self = this,
-				outerSet = self.outerSet,
-				contentSet = self.contentSet,
-				i;
+			empty.className = PLUGIN_NAME + '-outer';
+			for(i = children.length - 1; i > -1; i--) {
+				title = children[i];
 
-			for(i = outerSet.length - 1; i > -1; i--) {
-				contentSet[i].style.height = 'auto';
+				if(title.className.split(' ').indexOf(PLUGIN_NAME + '-title') > -1) {
+					classList = (content = title.nextElementSibling).className.split(' ');
+					if(classList.indexOf(PLUGIN_NAME + '-content') > -1) {
+						titleSet.unshift(title);
+						contentSet.unshift(content);
+						outerSet.unshift(outer = empty.cloneNode());
 
-				// States
-				if(contentSet[i].className.indexOf(PLUGIN_NAME + '-active') > -1) {
-					setActive(self, i, true);
-					outerSet[i].style.height = 'auto';
+						outer.appendChild(root.replaceChild(outer, content));
+						// Default state
+						content.style.height = 'auto';
+						if(classList.indexOf(PLUGIN_NAME + '-active') > -1) {
+							setActive(self, 0, true);
+							outer.style.height = 'auto';
+						}
+					}
 				}
 			}
 		},
@@ -121,40 +98,22 @@
 		bindEvents: function () {
 			var self = this,
 				root = self.root,
+				hover = self.options.hover,
 				mouseInst;
 
-			on(root, 'mouseover', function (e) {
-				var hover = self.options.hover;
-
-				if(hover !== false) {
+			if(hover !== false) {
+				on(root, 'mouseover', function (e) {
 					mouseInst = setTimeout(function () {
 						push(e);
 					}, hover);
-				}
-			});
+				});
 
-			on(root, 'mouseout', function (e) {
-				clearTimeout(mouseInst);
-			});
+				on(root, 'mouseout', function (e) {
+					clearTimeout(mouseInst);
+				});
+			}
 
 			on(root, 'click', push);
-
-			on(root, transitionEnd, function (e) {
-				var el = e.target,
-					index;
-
-				if(e.propertyName === 'height' && (index = self.outerSet.indexOf(el)) > -1) {
-					attr(el, dataAnimating, null);
-					if(attr(el, dataActive)) {
-						el.style.cssText = 'height:auto;';
-						trigger('afteropen', self, index);
-					} else {
-						el.style.cssText = '';
-						trigger('afterclose', self, index);
-					}
-
-				}
-			});
 
 			function push (e) {
 				var titleSet = self.titleSet,
@@ -179,6 +138,23 @@
 					e.preventDefault();
 				}
 			}
+
+			on(root, transitionEnd, function (e) {
+				var el = e.target,
+					index;
+
+				if(e.propertyName === 'height' && (index = self.outerSet.indexOf(el)) > -1) {
+					attr(el, dataAnim, null);
+					if(attr(el, dataActive)) {
+						el.style.cssText = 'height:auto;';
+						trigger('afteropen', self, index);
+					} else {
+						el.style.cssText = '';
+						trigger('afterclose', self, index);
+					}
+
+				}
+			});
 		},
 
 		open: function (index, noAnim) {
@@ -191,46 +167,32 @@
 			index = index === -1 ? outerSet.length - 1 : index;
 			outer = outerSet[index];
 
-			if( ! outer) {
-				return false;
-			}
-
 			if(options.single) {
 				for(i = outerSet.length - 1; i > -1; i--) if(i !== index) {
 					self.close(i, noAnim);
 				}
 			}
 
-			if( ! transition || noAnim || speed === 0) {
-				if( ! trigger('beforeopen', self, index)) {
-					trigger('abort', self, index);
-					return;
-				}
-
+			if(outer && ! attr(outer, dataAnim) && ! attr(outer, dataActive) && trigger('beforeopen', self, index)) {
 				setActive(self, index, true);
-				outer.style.cssText = 'height:auto;';
-
 				trigger('open', self, index);
-				trigger('afteropen', self, index);
 
-			} else if( ! attr(outer, dataAnimating) && ! attr(outer, dataActive)) {
-				if( ! trigger('beforeopen', self, index)) {
-					trigger('abort', self, index);
-					return;
+				if( ! transition || noAnim || speed === 0) {
+					outer.style.cssText = 'height:auto;';
+					trigger('afteropen', self, index);
+				} else {
+					outer.style.height = 'auto';
+					height = outer.offsetHeight;
+					if(height !== 0) {
+						attr(outer, dataAnim, true);
+						outer.style.height = 0;
+						outer.offsetWidth;
+						outer.style.cssText = 'height:' + height + 'px;' + transition + '-duration:' + speed + 'ms;';
+					}
+
 				}
 
-				setActive(self, index, true);
-
-				outer.style.height = 'auto';
-				height = getComputedStyle(outer).height;
-				if(height !== '0px') {
-					attr(outer, dataAnimating, true);
-					outer.style.height = 0;
-					outer.offsetWidth;
-					outer.style.cssText = 'height:' + height + ';' + transition + '-duration:' + speed + 'ms;';
-				}
-
-				trigger('open', self, index);
+				return true;
 			}
 		},
 
@@ -242,36 +204,21 @@
 			index = index === -1 ? outerSet.length - 1 : index;
 			outer = outerSet[index];
 
-			if( ! outer) {
-				return false;
-			}
+			if(outer && ! attr(outer, dataAnim) && attr(outer, dataActive) && trigger('beforeclose', self, index)) {
+				setActive(self, index, false);
+				trigger('close', self, index);
 
-			if( ! transition || noAnim || speed === 0) {
-				if( ! trigger('beforeclose', self, index)) {
-					trigger('abort', self, index);
-					return;
+				if( ! transition || noAnim || speed === 0) {
+					outer.style.cssText = '';
+					trigger('afterclose', self, index);
+				} else {
+					attr(outer, dataAnim, true);
+					outer.style.height = outer.offsetHeight + 'px';
+					outer.offsetWidth;
+					outer.style.cssText = transition + '-duration:' + speed + 'ms;';
 				}
 
-				setActive(self, index, false);
-				outer.style.cssText = '';
-
-				trigger('close', self, index);
-				trigger('afterclose', self, index);
-
-			} else if( ! attr(outer, dataAnimating) && attr(outer, dataActive)) {
-				if( ! trigger('beforeclose', self, index)) {
-					trigger('abort', self, index);
-					return;
-				}
-
-				setActive(self, index, false);
-				attr(outer, dataAnimating, true);
-
-				outer.style.height = getComputedStyle(outer).height;
-				outer.offsetHeight;
-				outer.style.cssText = transition + '-duration:' + speed + 'ms;';
-
-				trigger('close', self, index);
+				return true;
 			}
 		}
 	}
@@ -333,7 +280,7 @@
 					}
 				}
 
-				return inst[method](Number(index), noanim) !== false;
+				return !! inst[method](Number(index), noanim);
 			}
 		}
 	}
