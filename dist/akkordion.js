@@ -7,7 +7,7 @@
  * Copyright (c) 2015, Bogdan Chadkin <trysound@yandex.ru>
  */
 
-(function (module) {
+;(function (module) {
 
 	window.akkordion = module(window, document)
 
